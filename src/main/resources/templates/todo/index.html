@@ -5,7 +5,36 @@
     <title>todo</title>
     <script th:src="@{/webjars/htmx.org/1.9.6/dist/htmx.min.js}"></script>
 </head>
+
 <body>
-<div id="todo-list" th:replace="~{/todo/todolist :: todo-list}"></div>
+<main style="display: flex; flex-direction: column; row-gap: 2em;">
+
+    <div id="todo-form" th:fragment="todo-form" hx-swap-oob="true">
+        <input
+                name="new-todo"
+                type="text"
+                th:hx-post="@{/todo}"
+                hx-trigger="keyup[keyCode==13]"
+                hx-target="#todo-list"
+        />
+    </div>
+
+    <div id="todo-list" th:fragment="todo-list" style="display: flex; flex-direction: column; row-gap: 1em;">
+        <div class="row" th:each="todo : ${todoList}" style="display: flex; flex-direction: row; justify-content: start;">
+            <div th:text="${todo.name()}" style="flex-basis: 80%;"></div>
+            <button
+                    th:attr="hx-delete=@{/todo/{id}(id=${todo.id()})}"
+                    hx-confirm="Are you sure?"
+                    hx-trigger = "click"
+                    hx-target="closest .row"
+                    hx-swap="outerHTML"
+                    style="flex-basis: 20%">
+                delete
+            </button>
+        </div>
+    </div>
+
+</main>
+
 </body>
 </html>

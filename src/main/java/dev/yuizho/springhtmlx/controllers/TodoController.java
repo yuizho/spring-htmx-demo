@@ -1,23 +1,26 @@
 package dev.yuizho.springhtmlx.controllers;
 
 import dev.yuizho.springhtmlx.applications.TodoService;
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.FragmentsRendering;
 
 @Controller
-@RequestMapping("todo")
-public class TodoController {
+@RequestMapping("/todo")
+class TodoController {
     private final TodoService todoService;
 
-    public TodoController(TodoService todoService) {
+    TodoController(TodoService todoService) {
         this.todoService = todoService;
     }
 
     @GetMapping
-    public String index(Model model) {
+    String todo(Model model) {
         model.addAttribute(
                 "todoList",
                 todoService.findAll()
@@ -25,26 +28,28 @@ public class TodoController {
         return "todo/index";
     }
 
-    @PostMapping("/register")
-    public String register(Model model, String todo) {
-        todoService.register(todo);
-
+    @HxRequest
+    @PostMapping
+    View add(@RequestParam("new-todo") String newTodo,
+             Model model,
+             HtmxResponse htmxResponse
+                     ) {
+        todoService.register(newTodo);
         model.addAttribute(
                 "todoList",
                 todoService.findAll()
         );
-        model.addAttribute("form", "");
-        return "todo/todolist";
+
+        return FragmentsRendering
+                .with("todo/index :: todo-form")
+                .fragment("todo/index :: todo-list")
+                .build();
     }
 
-    @PostMapping("/delete")
-    public String delete(Model model, int id) {
-        todoService.delete(id);
-
-        model.addAttribute(
-                "todoList",
-                todoService.findAll()
-        );
-        return "todo/todolist";
+    @DeleteMapping(produces = MediaType.TEXT_HTML_VALUE, path = "/{todoId}")
+    @ResponseBody
+    String delete(@PathVariable int todoId) {
+        todoService.delete(todoId);
+        return "";
     }
 }
