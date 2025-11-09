@@ -1,0 +1,12 @@
+services:
+  mysql:
+    image: mysql:8.1
+    ports:
+      - '127.0.0.1:3306:3306'
+    environment:
+      - 'MYSQL_DATABASE=db'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=password'
+      - 'MYSQL_USER=user'
+    restart: always
+
