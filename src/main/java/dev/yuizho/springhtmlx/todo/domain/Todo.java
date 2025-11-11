@@ -1,4 +1,4 @@
-package dev.yuizho.springhtmlx.domain;
+package dev.yuizho.springhtmlx.todo.domain;
 
 public record Todo(int id, String name) {
 }

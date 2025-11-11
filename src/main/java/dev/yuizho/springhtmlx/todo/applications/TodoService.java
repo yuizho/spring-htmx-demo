@@ -1,7 +1,7 @@
-package dev.yuizho.springhtmlx.applications;
+package dev.yuizho.springhtmlx.todo.applications;
 
-import dev.yuizho.springhtmlx.domain.Todo;
-import dev.yuizho.springhtmlx.domain.TodoRepository;
+import dev.yuizho.springhtmlx.todo.domain.Todo;
+import dev.yuizho.springhtmlx.todo.domain.TodoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

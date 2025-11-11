@@ -1,6 +1,6 @@
-package dev.yuizho.springhtmlx.controllers;
+package dev.yuizho.springhtmlx.todo.controllers;
 
-import dev.yuizho.springhtmlx.applications.TodoService;
+import dev.yuizho.springhtmlx.todo.applications.TodoService;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.http.MediaType;

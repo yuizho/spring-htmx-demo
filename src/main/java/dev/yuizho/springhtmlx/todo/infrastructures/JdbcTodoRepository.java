@@ -1,7 +1,7 @@
-package dev.yuizho.springhtmlx.infrastructures;
+package dev.yuizho.springhtmlx.todo.infrastructures;
 
-import dev.yuizho.springhtmlx.domain.Todo;
-import dev.yuizho.springhtmlx.domain.TodoRepository;
+import dev.yuizho.springhtmlx.todo.domain.Todo;
+import dev.yuizho.springhtmlx.todo.domain.TodoRepository;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
