@@ -1,6 +1,8 @@
 package dev.yuizho.springhtmlx.chat.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -9,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class MessageHandler extends TextWebSocketHandler {
+    private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
     ConcurrentMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
     @Override
@@ -16,7 +19,7 @@ public class MessageHandler extends TextWebSocketHandler {
         sessions.putIfAbsent(session.getId(), session);
 
         var payload = message.getPayload();
-        System.out.println("Received message: " + payload);
+        logger.info("Received message: {}", payload);
 
         var objectMapper = new ObjectMapper();
         var jsonNode = objectMapper.readTree(payload);
