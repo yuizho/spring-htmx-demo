@@ -7,6 +7,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -42,7 +43,6 @@ public class MessageHandler extends TextWebSocketHandler {
         var jsonNode = objectMapper.readTree(payload);
         var content = jsonNode.get("message").asText();
         var response = new TextMessage(
-                // FIXME: needs xss prevention
                 String.format(
                         """
                                 <ul hx-swap-oob=\"beforeend:#histories\"><li>%sからメッセージが届きました！</li></ul>
@@ -51,7 +51,7 @@ public class MessageHandler extends TextWebSocketHandler {
                                 """,
                         session.getId(),
                         session.getId(),
-                        content
+                        HtmlUtils.htmlEscape(content)
                 )
         );
 
