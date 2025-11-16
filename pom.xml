@@ -72,6 +72,11 @@
             <artifactId>htmx-spring-boot</artifactId>
             <version>4.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>milligram</artifactId>
+            <version>1.4.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.github.javafaker</groupId>
