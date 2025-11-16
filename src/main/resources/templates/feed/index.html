@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>feed</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/materialize-css@1.0.0/dist/css/materialize.min.css">
+</head>
+<body>
+<main>
+    <div id="feeds" th:fragment="feeds">
+        <table>
+            <tbody th:each="feed : ${feeds}">
+            <tr>
+                <td th:text="${feed.id()}"></td>
+                <td th:text="${feed.userName()}"></td>
+                <td th:text="${feed.tittle()}"></td>
+                <td th:text="${feed.contentSummary()}"></td>
+                <td th:text="${feed.createdAt()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="load" th:fragment="load" hx-swap-oob="true">
+        <button
+                th:attr="hx-get=@{/feed/{p}(p=${page})}"
+                hx-target="#feeds"
+        >
+            Load More Feeds！
+        </button>
+    </div>
+</main>
+</body>
+</html>
