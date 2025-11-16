@@ -26,9 +26,11 @@
         <button
                 th:attr="hx-get=@{/feed/{p}(p=${page})}"
                 hx-target="#feeds"
+                hx-indicator="#loading"
         >
             Load More Feeds！
         </button>
+        <span id="loading" class="htmx-indicator">Loading...</span>
     </div>
 </main>
 </body>

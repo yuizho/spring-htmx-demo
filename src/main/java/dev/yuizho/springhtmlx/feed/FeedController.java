@@ -49,7 +49,9 @@ class FeedController {
             @PathVariable int page,
             Model model,
             HtmxResponse htmxResponse
-    ) {
+    ) throws InterruptedException {
+        Thread.sleep(1000);
+
         int to = page * 10;
         model.addAttribute(
                 "feeds",
