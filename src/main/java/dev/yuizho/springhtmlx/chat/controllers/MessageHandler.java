@@ -45,6 +45,8 @@ public class MessageHandler extends TextWebSocketHandler {
         var response = new TextMessage(
                 String.format(
                         """
+                                <input id="message" name="message" hx-swap-oob="true" />
+                                
                                 <ul hx-swap-oob=\"beforeend:#histories\"><li>%sからメッセージが届きました！</li></ul>
                                 
                                 <ul hx-swap-oob=\"beforeend:#messages\"><li>%s: %s</li></ul>
