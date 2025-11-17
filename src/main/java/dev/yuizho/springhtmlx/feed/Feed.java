@@ -1,6 +1,4 @@
-package dev.yuizho.springhtmlx.todo.controllers;
-
-import java.time.LocalDateTime;
+package dev.yuizho.springhtmlx.feed;
 
 public record Feed(
         int id,

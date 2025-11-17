@@ -1,7 +1,6 @@
 package dev.yuizho.springhtmlx.feed;
 
 import com.github.javafaker.Faker;
-import dev.yuizho.springhtmlx.todo.controllers.Feed;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.stereotype.Controller;
