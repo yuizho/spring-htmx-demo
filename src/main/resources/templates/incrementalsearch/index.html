@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>feed</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+</head>
+<body>
+<main>
+    <input
+            name="keyword" placeholder="Begin Typing To Search Users..."
+            type="text"
+            th:hx-get="@{/search}"
+            hx-trigger="input changed delay:100ms, keyup[key=='Enter']"
+            hx-target="#contacts"
+    />
+
+    <div id="contacts" th:fragment="contacts">
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody th:each="contact : ${contacts}">
+                <tr>
+                    <td th:text="${contact.firstName()}"></td>
+                    <td th:text="${contact.lastName()}"></td>
+                    <td th:text="${contact.email()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
