@@ -10,6 +10,14 @@
 <main>
     <div>
         <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>UserName</th>
+                    <th>title</th>
+                    <th>createdAt</th>
+                </tr>
+            </thead>
             <tbody id="feed-table-body">
                 <tr th:each="feed, iterStat : ${feeds}"
                     th:fragment="feed-row"

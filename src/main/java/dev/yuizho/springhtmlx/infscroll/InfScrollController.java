@@ -27,12 +27,13 @@ class InfScrollController {
                     SimpleDateFormat.getDateTimeInstance().format(FAKER.date().birthday()))
             )
             .toList();
+    private static final int ROWS_PER_PAGE = 10;
 
     @GetMapping
     String feed(Model model) {
         model.addAttribute(
                 "feeds",
-                FEEDS.subList(0, 5)
+                FEEDS.subList(0, ROWS_PER_PAGE)
         );
         model.addAttribute(
                 "page",
@@ -50,8 +51,8 @@ class InfScrollController {
     ) throws InterruptedException {
         Thread.sleep(1000);
 
-        int from = (page - 1) * 5;
-        int to = Math.min(page * 5, FEEDS.size());
+        int from = (page - 1) * ROWS_PER_PAGE;
+        int to = Math.min(page * ROWS_PER_PAGE, FEEDS.size());
 
         if (from >= FEEDS.size()) {
             // empty response to stop infinite scroll
