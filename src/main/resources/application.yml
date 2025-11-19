@@ -7,4 +7,4 @@ dev:
   yuizho:
     springhtmx:
       uploaded-file:
-        path: ${uploaded_file.path}
+        path: @uploaded_file.path@
