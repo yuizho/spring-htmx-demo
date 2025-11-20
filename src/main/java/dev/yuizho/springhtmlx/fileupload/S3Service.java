@@ -16,7 +16,7 @@ public class S3Service {
     }
 
     public String upload(String bucketName, MultipartFile file) throws IOException {
-        var key = UUID.randomUUID().toString() + "/" + file.getOriginalFilename();
+        var key = UUID.randomUUID() + "/" + file.getOriginalFilename();
         s3Template.upload(bucketName, key, file.getInputStream());
         return key;
     }
