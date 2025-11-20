@@ -2,9 +2,3 @@ spring:
   sql:
     init:
       mode: always
-
-dev:
-  yuizho:
-    springhtmx:
-      uploaded-file:
-        path: @uploaded_file.path@
