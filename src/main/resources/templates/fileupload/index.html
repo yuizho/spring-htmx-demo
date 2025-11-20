@@ -8,14 +8,14 @@
 </head>
 <body>
 <main>
-    <form id='form' hx-encoding='multipart/form-data' hx-post='/fileupload' hx-target="#message-div">
+    <form id='form' hx-encoding='multipart/form-data' hx-post='/fileupload' hx-target="#message">
         <input type='file' name='file'>
         <br>
         <button>Upload</button>
         <br>
         <progress id='progress' value='0' max='100'></progress>
     </form>
-    <div id="message-div">
+    <div id="message" th:fragment="message">
         <p th:if="${message}" th:text="${message}"></p>
     </div>
     <script>

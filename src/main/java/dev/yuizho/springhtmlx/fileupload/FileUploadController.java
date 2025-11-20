@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.FragmentsRendering;
 
 import java.io.IOException;
 
@@ -31,9 +33,13 @@ public class FileUploadController {
     }
 
     @PostMapping
-    public String upload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+    public View upload(@RequestParam("file") MultipartFile file, Model model) throws IOException, InterruptedException {
+        Thread.sleep(1000);
+
         var key = s3Service.upload(bucketName, file);
         model.addAttribute("message", "File uploaded successfully. Key: " + key);
-        return "fileupload/index";
+        return FragmentsRendering
+                .with("fileupload/index :: message")
+                .build();
     }
 }
