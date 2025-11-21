@@ -30,6 +30,8 @@ public class FileUploadController {
 
     @GetMapping
     public String index(Model model) {
+        model.addAttribute("uploaded_files", s3Service.listObjects(fileUploadProperties.bucketName()));
+
         return "fileupload/index";
     }
 
@@ -39,8 +41,11 @@ public class FileUploadController {
 
         var key = s3Service.upload(fileUploadProperties.bucketName(), file);
         model.addAttribute("message", "File uploaded successfully. Key: " + key);
+        model.addAttribute("uploaded_files", key);
+
         return FragmentsRendering
                 .with("fileupload/index :: message")
+                .fragment("fileupload/index :: uploaded-file")
                 .build();
     }
 }

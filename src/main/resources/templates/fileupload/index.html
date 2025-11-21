@@ -8,16 +8,24 @@
 </head>
 <body>
 <main>
-    <form id='form' hx-encoding='multipart/form-data' hx-post='/fileupload' hx-target="#message">
-        <input type='file' name='file'>
-        <br>
-        <button>Upload</button>
-        <br>
-        <progress id='progress' value='0' max='100'></progress>
-    </form>
+    <h3>File Upload Form</h3>
     <div id="message" th:fragment="message">
         <p th:if="${message}" th:text="${message}"></p>
     </div>
+    <form id="form" hx-encoding="multipart/form-data">
+        <input type="file" name="file">
+        <br>
+        <button hx-post="/fileupload" hx-target="#message" hx-indicator="#progress">Upload</button>
+        <progress id="progress" class="htmx-indicator" value="0" max="100"></progress>
+    </form>
+
+    <h3>Uploaded Files</h3>
+    <ul id="uploaded-files" th:fragment="uploaded-file" hx-swap-oob="beforeend: #uploaded-files">
+        <li th:each="file : ${uploaded_files}">
+            <span th:text="${file}"></span>
+        </li>
+    </ul>
+
     <script>
         htmx.on('#form', 'htmx:xhr:progress', function(evt) {
           htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
