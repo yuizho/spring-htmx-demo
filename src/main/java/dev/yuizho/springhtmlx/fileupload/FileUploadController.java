@@ -1,5 +1,6 @@
 package dev.yuizho.springhtmlx.fileupload;
 
+import dev.yuizho.springhtmlx.configs.FileUploadProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +18,14 @@ import java.io.IOException;
 @RequestMapping("/fileupload")
 public class FileUploadController {
     private final S3Service s3Service;
-    private final String bucketName;
+    private final FileUploadProperties fileUploadProperties;
 
     public FileUploadController(
             S3Service s3Service,
-            @Value("${cloud.aws.s3.bucket-name:test-bucket}") String bucketName
+            FileUploadProperties fileUploadProperties
     ) {
         this.s3Service = s3Service;
-        this.bucketName = bucketName;
+        this.fileUploadProperties = fileUploadProperties;
     }
 
     @GetMapping
@@ -36,7 +37,7 @@ public class FileUploadController {
     public View upload(@RequestParam("file") MultipartFile file, Model model) throws IOException, InterruptedException {
         Thread.sleep(1000);
 
-        var key = s3Service.upload(bucketName, file);
+        var key = s3Service.upload(fileUploadProperties.bucketName(), file);
         model.addAttribute("message", "File uploaded successfully. Key: " + key);
         return FragmentsRendering
                 .with("fileupload/index :: message")

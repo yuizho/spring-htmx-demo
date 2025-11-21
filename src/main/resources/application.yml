@@ -2,3 +2,8 @@ spring:
   sql:
     init:
       mode: always
+dev:
+  yuizho:
+    springhtmlx:
+      file-upload:
+          bucket-name: test-bucket
