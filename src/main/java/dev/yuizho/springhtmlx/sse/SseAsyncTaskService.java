@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.util.HtmlUtils;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class SseAsyncTaskService {
     private final ResourceLoader resourceLoader;
     private static final String DOC_FILE_PATH = "classpath:file/chika_seikatsushano_shuki.txt";
 
-    public SseAsyncTaskService(ResourceLoader resourceLoader, SpringTemplateEngine templateEngine) {
+    public SseAsyncTaskService(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 
@@ -27,7 +26,7 @@ public class SseAsyncTaskService {
              var reader = new BufferedReader(new InputStreamReader(is, Charset.forName("SHIFT-JIS")));
         ) {
             String line;
-            // Thread.sleepとかかけるのでreadLine()は古い書き方で
+            // Thread.sleepとかかけるのでlines()は使わずreadLine()は古い書き方で
             while ((line = reader.readLine()) != null) {
                 for (char c : line.toCharArray()) {
                     String data = String.format(
