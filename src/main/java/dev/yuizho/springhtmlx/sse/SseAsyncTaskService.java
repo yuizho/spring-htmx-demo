@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.util.HtmlUtils;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.BufferedReader;
@@ -14,11 +13,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 @Service
-public class SseService {
+public class SseAsyncTaskService {
     private final ResourceLoader resourceLoader;
     private static final String DOC_FILE_PATH = "classpath:file/chika_seikatsushano_shuki.txt";
 
-    public SseService(ResourceLoader resourceLoader, SpringTemplateEngine templateEngine) {
+    public SseAsyncTaskService(ResourceLoader resourceLoader, SpringTemplateEngine templateEngine) {
         this.resourceLoader = resourceLoader;
     }
 
