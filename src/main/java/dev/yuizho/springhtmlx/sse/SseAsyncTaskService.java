@@ -26,22 +26,18 @@ public class SseAsyncTaskService {
         try (var is = resourceLoader.getResource(DOC_FILE_PATH).getInputStream();
              var reader = new BufferedReader(new InputStreamReader(is, Charset.forName("SHIFT-JIS")));
         ) {
-            int charCode;
-            // TODO: 読むのは1文字づつ読む必要はない
-            while ((charCode = reader.read()) != -1) {
-                char c = (char) charCode;
-                if (c == '\r') {
-                    // 開業は\r\nでくるので一文字進める
-                    reader.read();
-                    emitter.send(SseEmitter.event().name("message").data("<br>"));
-                } else {
+            String line;
+            // Thread.sleepとかかけるのでreadLine()は古い書き方で
+            while ((line = reader.readLine()) != null) {
+                for (char c : line.toCharArray()) {
                     String data = String.format(
                             "<span>%s</span>",
                             HtmlUtils.htmlEscape(String.valueOf(c))
                     );
                     emitter.send(SseEmitter.event().name("message").data(data));
+                    Thread.sleep(50);
                 }
-                Thread.sleep(50);
+                emitter.send(SseEmitter.event().name("message").data("<br>"));
             }
             emitter.complete();
         } catch (IOException | InterruptedException e) {
