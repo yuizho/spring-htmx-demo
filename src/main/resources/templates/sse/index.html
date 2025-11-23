@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>sse</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx-ext-sse@2.2.4" integrity="sha384-A986SAtodyH8eg8x8irJnYUk7i9inVQqYigD6qZ9evobksGNIXfeFvDwLSHcp31N" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+    <style>
+        #message {
+            height: 90vh;
+            overflow-y: auto;
+            /* スムーズなスクロール */
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <p>
+        青空文庫(<a href="https://www.aozora.gr.jp/cards/000363/card57393.html">https://www.aozora.gr.jp/cards/000363/card57393.html</a>)で管理されている地下生活者の手記の文章を読み上げます。
+    </p>
+
+    <div id="message" hx-ext="sse" sse-connect="/sse/message" sse-swap="message" hx-swap="beforeend">
+    </div>
+</main>
+<script>
+    const messageContainer = document.getElementById('message');
+    // htmxが#message要素にコンテンツを追加した後にイベントをリッスン
+    messageContainer.addEventListener('htmx:afterSwap', function () {
+        // コンテナのスクロール位置を一番下に設定
+        this.scrollTop = this.scrollHeight;
+    });
+</script>
+</body>
+</html>
