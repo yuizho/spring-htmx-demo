@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>validation</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+</head>
+<body>
+<main>
+    <form
+            th:hx-post="@{/validation}"
+            hx-target="#message"
+            hx-swap="outerHTML"
+    >
+        <input
+                name="name"
+                type="text"
+        >
+        <button>send</button>
+        <p th:fragment="message" id="message" th:text="${message}"></p>
+    </form>
+</main>
+<script>
+    document.addEventListener('htmx:load', () => console.log('htmx loaded'));
+</script>
+</body>
+</html>
