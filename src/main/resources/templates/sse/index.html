@@ -31,6 +31,9 @@
         // コンテナのスクロール位置を一番下に設定
         this.scrollTop = this.scrollHeight;
     });
+
+    document.addEventListener('htmx:load', () => console.log('htmx loaded'));
+    document.addEventListener('htmx:sseOpen', () => console.log('open sse session'));
 </script>
 </body>
 </html>
