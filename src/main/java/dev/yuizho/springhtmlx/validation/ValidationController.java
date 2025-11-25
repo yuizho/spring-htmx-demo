@@ -1,8 +1,7 @@
 package dev.yuizho.springhtmlx.validation;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,8 +30,8 @@ class ValidationController {
 
     @HxRequest
     @PostMapping
-    View post(@NotBlank @Max(20) @RequestParam("name") String name,
-             Model model) {
+    View post(@Size(min = 1, max = 20) @RequestParam("name") String name,
+              Model model) {
         LOGGER.info("name: {}", name);
 
         model.addAttribute(
