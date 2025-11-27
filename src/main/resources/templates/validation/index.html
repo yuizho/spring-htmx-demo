@@ -23,6 +23,11 @@
 </main>
 <script>
     document.addEventListener('htmx:load', () => console.log('htmx loaded'));
+
+    document.body.addEventListener("htmx:responseError", (e) => {
+        errorJson = JSON.parse(e.detail.xhr.response);
+        alert(errorJson.message);
+    });
 </script>
 </body>
 </html>

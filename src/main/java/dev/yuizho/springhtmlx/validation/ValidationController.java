@@ -30,8 +30,12 @@ class ValidationController {
 
     @HxRequest
     @PostMapping
-    View post(@Size(min = 1, max = 20) @RequestParam("name") String name,
-              Model model) {
+    View post(
+            @Size(min = 1, max = 20, message = "{min}文字以上{max}文字以下で入力してください。")
+            @RequestParam("name")
+            String name,
+            Model model
+    ) {
         LOGGER.info("name: {}", name);
 
         model.addAttribute(
@@ -43,6 +47,10 @@ class ValidationController {
                 .build();
     }
 
+    /*
+    こういった形で頑張ってhtmxのルールに沿って返すのもありかもしれないが、
+    hx-onでjsで処理してしまうのが楽なきがするなぁ (バリデーションはクライアントですればいいわけだし)
+    https://tech.excite.co.jp/entry/2025/07/07/100238
     @ExceptionHandler(ConstraintViolationException.class)
     View handleConstraintViolationException(ConstraintViolationException e, Model model) {
         model.addAttribute("message", e.getConstraintViolations().iterator().next().getMessage());
@@ -50,4 +58,5 @@ class ValidationController {
                 .with("validation/index :: message")
                 .build();
     }
+    */
 }
