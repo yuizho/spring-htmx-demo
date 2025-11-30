@@ -5,6 +5,12 @@
     <title>validation</title>
     <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
     <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+    <style>
+        .required:after {
+            content: "*";
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <main>
@@ -15,15 +21,23 @@
     >
         <!-- HTML5のバリデーション機能でクライアントサイドのバリデーションは実施 -->
         <!-- それらをなくしたらサーバサイドでBeanValidationでバリデーション実施。結果はJsonで帰ってきてhtmx:responseErrorのハンドラで処理される -->
+        <label class="required" for="name">name</label>
         <input
+                id="name"
                 name="name"
                 type="text"
+                minlength="1"
+                maxlength="20"
                 required
-                minlength="6"
-                maxlength="6"
-                pattern="^[0-9]+$"
-                placeholder="6桁の数値を入力"
+                placeholder="名前を入力"
         >
+
+        <label for="from">from</label>
+        <input id="from" type="date" name="from" min="2019-01-01" max="2999-12-31">
+
+        <label for="to">from</label>
+        <input id="to" type="date" name="to" min="2019-01-01" max="2999-12-31">
+
         <button>send</button>
         <p th:fragment="message" id="message" th:text="${message}"></p>
     </form>
@@ -33,7 +47,7 @@
 
     document.body.addEventListener("htmx:responseError", (e) => {
         errorJson = JSON.parse(e.detail.xhr.response);
-        alert(errorJson.message);
+        errorJson.errors.forEach((e) => alert(e.defaultMessage));
     });
 </script>
 </body>

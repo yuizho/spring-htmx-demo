@@ -1,21 +1,23 @@
 package dev.yuizho.springhtmlx.validation;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.FragmentsRendering;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.ConstraintViolationException;
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Validated
 @Controller
@@ -31,16 +33,14 @@ class ValidationController {
     @HxRequest
     @PostMapping
     View post(
-            @Size(min = 1, max = 20, message = "{min}文字以上{max}文字以下で入力してください。")
-            @RequestParam("name")
-            String name,
+            @Valid  User user,
             Model model
     ) {
-        LOGGER.info("name: {}", name);
+        LOGGER.info("user: {}", user);
 
         model.addAttribute(
                 "message",
-                "Hello " + name + "!"
+                "Hello " + user.name() + "!, " + user.from().orElse(null) + ", " + user.to.orElse(null)
         );
         return FragmentsRendering
                 .with("validation/index :: message")
@@ -59,4 +59,20 @@ class ValidationController {
                 .build();
     }
     */
+
+    record User(
+            @Size(min = 1, max = 20, message = "{min}文字以上{max}文字以下で入力してください。")
+            String name,
+            Optional<LocalDate> from,
+            Optional<LocalDate> to
+    ) {
+        @AssertTrue(message = "fromはto以前の日付を入力してください。")
+        public boolean isValidFromTo() {
+            if (from.isPresent() && to.isPresent()) {
+                return from.get().isBefore(to.get()) || from.get().isEqual(to.get());
+            } else {
+                return true;
+            }
+        }
+    }
 }
