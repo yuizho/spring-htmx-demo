@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boost</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/milligram/1.4.1/dist/milligram.min.css}">
+</head>
+<body>
+<main>
+    <h1>Boost Demo</h1>
+    <a th:href="@{/boost/next}">next!</a>
+    <br>
+    <a hx-boost="true" th:href="@{/boost/next}">next! by hx-boost!!!!</a>
+</main>
+</body>
+</html>
