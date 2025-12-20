@@ -21,17 +21,11 @@
         青空文庫(<a href="https://www.aozora.gr.jp/cards/000363/card57393.html">https://www.aozora.gr.jp/cards/000363/card57393.html</a>)で管理されている地下生活者の手記の文章を読み上げます。
     </p>
 
-    <div id="message" hx-ext="sse" sse-connect="/sse/message" sse-swap="message" hx-swap="beforeend">
+    <div id="message" hx-ext="sse" sse-connect="/sse/message" sse-swap="message" hx-swap="beforeend scroll:bottom">
     </div>
 </main>
 <script>
     const messageContainer = document.getElementById('message');
-    // htmxが#message要素にコンテンツを追加した後にイベントをリッスン
-    messageContainer.addEventListener('htmx:afterSwap', function () {
-        // コンテナのスクロール位置を一番下に設定
-        this.scrollTop = this.scrollHeight;
-    });
-
     document.addEventListener('htmx:load', () => console.log('htmx loaded'));
     document.addEventListener('htmx:sseOpen', () => console.log('open sse session'));
 </script>
