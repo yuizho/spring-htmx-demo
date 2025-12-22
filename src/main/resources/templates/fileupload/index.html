@@ -17,6 +17,7 @@
         <br>
         <button hx-post="/fileupload" hx-target="#message" hx-indicator="#progress">Upload</button>
         <progress id="progress" class="htmx-indicator" value="0" max="100"></progress>
+        <span id="progress-percent"></span>
     </form>
 
     <h3>Uploaded Files</h3>
@@ -28,7 +29,9 @@
 
     <script>
         htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+          percent = evt.detail.loaded/evt.detail.total * 100
           htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+          htmx.find('#progress-percent').textContent = percent + '%'
         });
     </script>
 </main>
