@@ -1,7 +1,6 @@
 package dev.yuizho.springhtmlx.fileupload;
 
 import dev.yuizho.springhtmlx.configs.FileUploadProperties;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
