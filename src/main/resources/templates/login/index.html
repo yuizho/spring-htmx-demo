@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>feed</title>
+    <title>login</title>
     <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
-    <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/milligram/1.4.1/dist/milligram.min.css}">
 
     <!-- 以下の記述がないとSpring SecurityのCSRFフィルターで403エラーが発生 -->
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -34,13 +34,11 @@
     </button>
 
     <div id="users" hx-get="/login/users" hx-trigger="load once" hx-swap="innerHTML">
-        <table th:fragment="users">
-            <tbody>
-            <tr th:each="user : ${users}">
+        <ul th:fragment="users">
+            <li th:each="user : ${users}">
                 <td th:text="${user}"></td>
-            </tr>
-            </tbody>
-        </table>
+            </li>
+        </ul>
     </div>
 </main>
 </body>
