@@ -10,6 +10,6 @@ CREATE TABLE account (
 );
 
 -- username: user, password: password
-INSERT INTO account (username, password) VALUES ('user', '$2a$10$jgChVCwtacBuodAKDvC7T.31DVwEiyq3B9molk0wcXmVxJBJIxsnq');
+INSERT INTO account (username, password) VALUES ('user', '{bcrypt}$2a$10$jgChVCwtacBuodAKDvC7T.31DVwEiyq3B9molk0wcXmVxJBJIxsnq');
 -- username: account, password: password
-INSERT INTO account (username, password) VALUES ('admin', '$2a$10$jgChVCwtacBuodAKDvC7T.31DVwEiyq3B9molk0wcXmVxJBJIxsnq')
+INSERT INTO account (username, password) VALUES ('admin', '{bcrypt}$2a$10$jgChVCwtacBuodAKDvC7T.31DVwEiyq3B9molk0wcXmVxJBJIxsnq')
