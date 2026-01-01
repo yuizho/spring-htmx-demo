@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>feed</title>
+    <script th:src="@{/webjars/htmx.org/2.0.8/dist/htmx.min.js}"></script>
+    <link rel="stylesheet" th:href="@{webjars/milligram/1.4.1/dist/milligram.min.css}">
+
+    <!-- 以下の記述がないとSpring SecurityのCSRFフィルターで403エラーが発生 -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script>
+        const initialize = () => {
+            document.body.addEventListener('htmx:configRequest', function(evt) {
+                var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+                var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+                evt.detail.headers[csrfHeaderName] = csrfToken;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initialize();
+        });
+    </script>
+</head>
+<body>
+<main>
+    <h1>ログイン後のホーム画面</h1>
+
+    <h2>ユーザ一覧</h2>
+    <button hx-post="/login/user" hx-trigger="click" hx-target="#users">
+        ランダムなユーザを追加する
+    </button>
+
+    <div id="users" hx-get="/login/users" hx-trigger="load once" hx-swap="innerHTML">
+        <table th:fragment="users">
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

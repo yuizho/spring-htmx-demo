@@ -1,4 +1,8 @@
 spring:
+  security:
+    user:
+      name: user
+      password: password
   thymeleaf:
     cache: false
   docker:
