@@ -10,18 +10,20 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script>
-        const initialize = () => {
-            document.body.addEventListener('htmx:configRequest', function(evt) {
-                var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
-                var csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        {
+            const initialize = () => {
+                document.body.addEventListener('htmx:configRequest', function(evt) {
+                    var csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+                    var csrfToken = document.querySelector('meta[name="_csrf"]').content;
 
-                evt.detail.headers[csrfHeaderName] = csrfToken;
+                    evt.detail.headers[csrfHeaderName] = csrfToken;
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                initialize();
             });
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initialize();
-        });
     </script>
 </head>
 <body>
@@ -35,8 +37,7 @@
 
     <div id="users" hx-get="/login/users" hx-trigger="load once" hx-swap="innerHTML">
         <ul th:fragment="users">
-            <li th:each="user : ${users}">
-                <td th:text="${user}"></td>
+            <li th:each="user : ${users}" th:text="${user}">
             </li>
         </ul>
     </div>
